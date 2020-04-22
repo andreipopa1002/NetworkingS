@@ -14,7 +14,7 @@ final class AuthorizedServiceTests: XCTestCase {
         mockedTokenProvider = MockAPIKeyProvider()
         service = AuthorizedService(
             service: mockedNetworkService,
-            tokenProvider: mockedTokenProvider
+            authorizationInjector: mockedTokenProvider
         )
     }
 
@@ -61,6 +61,10 @@ final class AuthorizedServiceTests: XCTestCase {
 //    }
 }
 
-private class MockAPIKeyProvider: APIKeyProviderInterface {
-    var apiKey = "my api key"
+class MockAPIKeyProvider: AuthorizationInjectorInterface {
+    func injectAuthorization(intoRequest: URLRequest) -> URLRequest {
+        var request = intoRequest
+        request.addValue("my api key", forHTTPHeaderField: "X-API-KEY")
+        return request
+    }
 }

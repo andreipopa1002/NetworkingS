@@ -1,7 +1,7 @@
 import Foundation
 
-protocol APIKeyProviderInterface {
-    var apiKey: String {get}
+public protocol AuthorizationInjectorInterface {
+    func injectAuthorization(intoRequest: URLRequest) -> URLRequest
 }
 
 public enum AuthorizedServiceError: Error, Equatable {
