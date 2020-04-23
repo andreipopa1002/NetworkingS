@@ -1,7 +1,7 @@
 import Foundation
 
 public final class ClientFactory {
-    let session: URLSession
+    private let session: URLSession
 
     public init (session: URLSession) {
         self.session = session
@@ -15,6 +15,13 @@ public final class ClientFactory {
         return AuthorizedService(
             service: networkService(),
             authorizationInjector: tokenProvider
+        )
+    }
+
+    public func decodingService(authorizationService: AuthorizedServiceInterface) -> DecodingServiceInterface {
+        return DecodingService(
+            service: authorizationService,
+            decoder: JSONDecoder()
         )
     }
 }
