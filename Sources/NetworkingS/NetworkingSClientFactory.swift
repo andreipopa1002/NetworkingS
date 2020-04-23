@@ -1,17 +1,17 @@
 import Foundation
 
-final class ClientFactory {
+public final class ClientFactory {
     let session: URLSession
 
-    init (session: URLSession) {
+    public init (session: URLSession) {
         self.session = session
     }
 
-    func networkService() -> NetworkServiceInterface {
+    public func networkService() -> NetworkServiceInterface {
         return NetworkService(with: session)
     }
 
-    func authorizesService(tokenProvider: AuthorizationInjectorInterface) -> AuthorizedServiceInterface {
+    public func authorizesService(tokenProvider: AuthorizationInjectorInterface) -> AuthorizedServiceInterface {
         return AuthorizedService(
             service: networkService(),
             authorizationInjector: tokenProvider
